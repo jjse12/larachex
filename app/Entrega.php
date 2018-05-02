@@ -17,4 +17,9 @@ class Entrega extends Model
     public function paquetes(){
         return $this->hasMany(Paquete::class, 'estado', 'fecha')->get();
     }
+
+    public function cliente(){
+        return $this->belongsTo(Cliente::class, 'cliente_id', 'id')->first();
+    }
+
 }

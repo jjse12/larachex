@@ -11,12 +11,12 @@
 |
 */
 
-Route::auth();
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/login', 'SessionController@create')->name('login');
+Route::post('/login', 'SessionController@store');
+Route::post('/logout', 'SessionController@destroy')->name('logout');
 
-Auth::routes();
+Route::get('/app', 'HomeController@index')->name('home');
+Route::get('/app{catchall}', 'HomeController@index')->where('catchall', '\/?.*');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/{catchall}', 'HomeController@redirectApp')->where('catchall', '\/?.*');

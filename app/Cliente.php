@@ -11,4 +11,8 @@ class Cliente extends Model
         return $this->hasMany(Paquete::class, 'cliente_id', "id");
     }
 
+    public function entregas(){
+        return $this->hasMany(Entrega::class, 'cliente_id', 'id')->get();
+    }
+
 }

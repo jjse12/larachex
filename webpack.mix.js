@@ -11,5 +11,10 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.react('resources/assets/js/app.jsx', 'public/js')
+    .sass('resources/assets/sass/app.scss', 'public/css/sass_generated/sass.css')
+    .styles([
+        'public/css/sass_generated/sass.css',
+        'node_modules/react-table/react-table.css',
+    ], 'public/css/app.css')
+;
