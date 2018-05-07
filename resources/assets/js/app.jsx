@@ -5,13 +5,8 @@ import {Provider} from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { Router, Route, Redirect, Switch } from 'react-router-dom';
 
-import {ACTION_TYPE_STRING as ACTION_TYPE_CONTENIDO} from './reducers/contenido';
-import {ACTION_TYPE_STRING as ACTION_TYPE_INVENTARIO_SELECTED} from './reducers/inventario-selected';
-
-
-import NavBar from './components/nav-bar';
+import NavBar from './components/header/nav-bar';
 import Inventario from './components/inventario';
-
 
 import { ReactTableDefaults } from "react-table";
 
@@ -19,13 +14,8 @@ Object.assign(ReactTableDefaults, {
 
 });
 
-var admin = document.head.querySelector('meta[name="permisos"]').getAttribute('content');
-var nombre = document.head.querySelector('meta[name="nombre"]').getAttribute('content');
-
-store.dispatch({
-    type: ACTION_TYPE_INVENTARIO_SELECTED,
-    inventarioSelected: []
-});
+let admin = document.head.querySelector('meta[name="permisos"]').getAttribute('content');
+let nombre = document.head.querySelector('meta[name="nombre"]').getAttribute('content');
 
 const routes = (
     <Switch>
@@ -39,7 +29,7 @@ ReactDom.render(
     <Provider store={store}>
         <Router history={browserHistory}>
             <div>
-                <NavBar admin={admin == 1} user={nombre}/>
+                <NavBar admin={admin === 1} user={nombre}/>
                 {routes}
             </div>
         </Router>

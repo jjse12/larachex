@@ -5,10 +5,9 @@ import checkboxHOC from "react-table/lib/hoc/selectTable";
 import PropTypes from 'prop-types';
 
 import {getInventario} from "../../reducers/inventario";
-import {setSelected} from "../../reducers/inventario-selected";
+import {setInventarioSelected} from "../../reducers/inventario-selected";
 import {getInventarioFromStore, getInventarioSelectedFromStore} from "../../reducers/getters";
 import {getInventarioColumns}from '../../services/tables-column-getters';
-
 
 const CheckboxTable = checkboxHOC(ReactTable);
 
@@ -16,66 +15,59 @@ const CheckboxTable = checkboxHOC(ReactTable);
     store => ({
         inventario: getInventarioFromStore(store),
         selected: getInventarioSelectedFromStore(store),
-        selectAll: false,
     }),
-    {getInventario, setSelected}
+    {getInventario, setInventarioSelected}
 )
 export default class TablaInventario extends Component {
 
-
     static propTypes = {
-        inventario: PropTypes.array.isRequired,
-        selected: PropTypes.array,
-        selectedAll: PropTypes.bool,
+        inventario: PropTypes.any.isRequired,
+        selected: PropTypes.object.isRequired,
 
-        getInventario: PropTypes.func.isRequired
+        optionsVisibilityHandler: PropTypes.func.isRequired,
+
+        getInventario: PropTypes.func.isRequired,
+        setInventarioSelected: PropTypes.func.isRequired
     };
 
 
     componentDidMount() {
         this.props.getInventario();
-        //this.props.getSelected();
     }
 
-    toggleSelection = (tracking) => {
-        const keyIndex = this.props.selected.indexOf(tracking);
-        let sel = this.props.selected;
-        if (keyIndex >= 0){
-            sel.splice(keyIndex, 1);
-            this.props.setSelected(sel);
+    toggleSelection = (tracking, bool, row) => {
+
+        if (tracking in this.props.selected){
+            delete this.props.selected[tracking];
         }
         else{
-            sel.push(tracking);
-            this.props.setSelected(sel);
+            this.props.selected[tracking] = row;
+            //this.props.setInventarioSelected(selected);
         }
-        //console.log(this.props.selected);
+
+        if (Object.keys(this.props.selected).length === 0)
+            this.props.optionsVisibilityHandler(false);
+        else
+            this.props.optionsVisibilityHandler(true);
+
         this.forceUpdate();
     };
 
-    toggleAll = () => {
-
-    }
-
     isSelected = tracking => {
-        return this.props.selected.includes(tracking);
+        return tracking in this.props.selected;
     };
 
-
     render() {
-        //console.log(this.state);
 
         if (this.props.inventario.length === 0)
             return null;
 
-        const {toggleSelection, toggleAll, isSelected, selectAll} = this;
+        const {toggleSelection, isSelected} = this;
 
         const checkboxProps = {
-            selectAll,
+            selectType: "checkbox",
             isSelected,
             toggleSelection,
-            toggleAll,
-            selectType: "checkbox",
-
             getTrProps: (s, r) => {
                 if (!r)
                     return {
@@ -83,7 +75,7 @@ export default class TablaInventario extends Component {
                             backgroundColor: '',
                             color: '',
                         }};
-                console.log('r: ' + r);
+                //console.log('r: ' + r);
                 const selected = this.isSelected(r.original._id);
                 return {
                     style: {
@@ -94,18 +86,26 @@ export default class TablaInventario extends Component {
             }
         };
 
+        /*
+        const size = [];
+        if (typeof this.table !== 'undefined')
+            size[0] = this.table.getResolvedState().sortedData.length;
 
+        else size[0] = this.props.inventario.length;
+            alert(size[0]);
+        */
         return (
             <div>
                 <div className='col-10 offset-1'><br/>
                     <CheckboxTable
+                        ref={r => (this.table = r)}
                         data={this.props.inventario}
                         columns={getInventarioColumns(this)}
+                        keyField='tracking'
                         showPagination={false}
                         showPageSizeOptions={false}
-                        filterable
+                        minRows={0}
                         defaultPageSize={this.props.inventario.length}
-                        ref={r => (this.checkboxTable = r)}
                         className="-striped -highlight"
                         {...checkboxProps}
                     />

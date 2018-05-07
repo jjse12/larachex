@@ -1,39 +1,165 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withStyles} from 'material-ui/styles';
+import axios from 'axios';
 import PropTypes from 'prop-types';
+import bootbox from 'bootbox';
+
+import { getInventarioSelectedFromStore } from '../../reducers/getters';
+
+import ExpansionPanel, {ExpansionPanelSummary, ExpansionPanelDetails} from 'material-ui/ExpansionPanel';
+import Divider from 'material-ui/Divider';
+import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import ExpandLessIcon from 'material-ui-icons/ExpandLess';
 
 const styles = theme => ({
-    opciones: {
-        overflow: 'hidden',
-        backgroundColor: '#333',
+    footer: {
         position: 'fixed',
         bottom: 0,
-        width: '100%',
+        left: '35%',
+        width: '30%',
+    },
+    panel_header: {
+        backgroundColor: '#FE6B8B',
+    },
+    footer_title: {
+        fontSize: '22px',
+        color: 'black',
+        textAlign: "center",
+        width: '100%'
+    },
+    boton:{
+        color: 'white',
+        textAlign: 'center',
+        align: 'center',
+        marginTop: '5px',
+        marginBottom: '5px',
+    },
+    notif_icon:{
+        marginTop: '5%',
+        height: '90%',
+        width: '50%',
+        cursor: 'pointer'
     },
 });
 
 @connect(
-    store => ({}),
+    store => ({
+        selected: getInventarioSelectedFromStore(store)
+    }),
     {}
 )
 @withStyles(styles)
 export default class FooterOpciones extends Component {
 
-    static propTypes = {};
+    static propTypes = {
+        selected: PropTypes.object.isRequired,
+        classes: PropTypes.object.isRequired,
+        visible: PropTypes.bool.isRequired,
+    };
+
+    constructor(){
+        super();
+        this.state={
+            open: false
+        };
+    }
 
     componentDidMount() {
 
     }
 
+    panelStateChange = (event, open) => {
+        this.setState({open: open});
+    }
+
+    handleWhatsappClicked = () => {
+        let cliente = this.props.selected[Object.keys(this.props.selected)[0]].cliente_id;
+        let arr = Object.values(this.props.selected).map(val => val.cliente_id.toUpperCase() === cliente.toUpperCase());
+        let mismoCliente= !arr.includes(false);
+
+        if (mismoCliente){
+            axios.get('/api/cliente/'+cliente+'/celular')
+                .then(function (response) {
+                    console.log(response);
+                    alert(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    }
+
+    handleEmailClicked= () => {
+        let cliente = this.props.selected[Object.keys(this.props.selected)[0]].cliente_id;
+        let arr = Object.values(this.props.selected).map(val => val.cliente_id.toUpperCase() === cliente.toUpperCase());
+        let mismoCliente= !arr.includes(false);
+
+        if (mismoCliente){
+            axios.get('/api/cliente/'+cliente+'/email')
+                .then(function (response) {
+                    console.log(response);
+                    alert(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    }
+
+    handelEntregaClicked = () => {
+        let cliente = this.props.selected[Object.keys(this.props.selected)[0]].cliente_id;
+        let arr = Object.values(this.props.selected).map(val => val.cliente_id.toUpperCase() === cliente.toUpperCase());
+        let mismoCliente= !arr.includes(false);
+
+        if (mismoCliente){
+            axios.get('/api/cliente/'+cliente+'/tarifa')
+                .then(function (response) {
+                    console.log(response);
+                    alert(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    }
+
+
     render() {
+        if (!this.props.visible){
+            return null;
+        }
+        const titulo = this.state.open ? "Esconder Opciones" : "Ver Opciones";
+
         return (
-            <div className="col-8 offset-2 align-self-center">
-                <br/>
-                <footer className={this.props.classes} >
-                    <h1>el footer</h1>
-                </footer>
-            </div>
+            <footer className={this.props.classes.footer} >
+                <ExpansionPanel expanded={this.state.open} onChange={this.panelStateChange}>
+                    <ExpansionPanelSummary className={this.props.classes.panel_header} expandIcon={<ExpandLessIcon />}>
+                        <label className={this.props.classes.footer_title}>{titulo}</label>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <div className='container'>
+                            <div className='row'>
+                                <div className='col-6'>
+                                        <h5>Notificar</h5>
+                                        <Divider/>
+                                </div>
+                            </div>
+                            <div className='row'>
+                                <div className='col-6'>
+                                    <img onClick={this.handleWhatsappClicked} className={`${this.props.classes.notif_icon} `} src="/img/whatsapp-icons/whatsapp128px.png" />
+                                    <img onClick={this.handleEmailClicked} className={`${this.props.classes.notif_icon} `} src="/img/email-icons/email128px.png" />
+                                </div>
+                                <div className='col-6'>
+                                    <button onClick={this.handelEntregaClicked} className={`${this.props.classes.boton} col-12 btn btn-success`}>Entregar Mercaderia</button>
+                                    <button className={`${this.props.classes.boton} col-12 btn btn-primary`}>Plan de Entrega</button>
+                                </div>
+                            </div>
+                        </div>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+            </footer>
+
         );
     }
 }

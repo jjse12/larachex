@@ -11127,6 +11127,11 @@ ul.ColVis_collection li label span {
   font-size: 14px;
 }
 
+.icon-update {
+  width: 50%;
+  margin-left: 25%;
+}
+
 .plan,
 .icon-update,
 .seleccionado {

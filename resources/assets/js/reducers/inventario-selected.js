@@ -1,8 +1,8 @@
 export const ACTION_TYPE_STRING = "get_inventario_selected";
 
-const initialState = [];
+const initialState = {};
 
-export const setSelected = (paquetes = []) => dispatch => (
+export const setInventarioSelected = (paquetes = {}) => dispatch => (
     dispatch(
         {
             type: ACTION_TYPE_STRING,

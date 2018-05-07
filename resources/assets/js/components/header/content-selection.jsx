@@ -21,8 +21,8 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Menu, { MenuItem, MenuList } from 'material-ui/Menu';
 
 import {push} from "react-router-redux";
-import {getNavbarSelectedFromStore} from "../reducers/getters";
-import {setNavbarSelected} from "../reducers/contenido";
+import {getNavbarSelectedFromStore} from "../../reducers/getters";
+import {setNavbarSelected} from "../../reducers/contenido";
 
 const styles = theme => ({
     menuItem: {
@@ -195,7 +195,7 @@ export default class NavBarContentSelector extends Component {
         //console.log(this.props.selected);
 
         return (
-            <div className='col-4'>
+            <div>
                 <h1 className={`${classes.contenido} text-white seleccionado`} onClick={this.listItemClicked}>{selectedString}</h1>
                 <Menu
                     id="lock-menu"

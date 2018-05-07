@@ -1,32 +1,38 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {withStyles} from 'material-ui/styles';
-import PropTypes from 'prop-types';
 import TablaInventario from "./tabla";
 import FooterOpciones from "./opciones";
+import { withStyles } from 'material-ui/styles';
 
-const styles = theme => ({});
+const styles = theme => ({
+    inventario:{
+        marginTop: '5%'
+    }
+});
 
-@connect(
-    store => ({}),
-    {}
-)
 @withStyles(styles)
-export default class /* ComponentName */
-    extends Component {
+export default class Inventario extends Component {
+    constructor(){
+        super();
+        this.handleOptionsVisibility= this.handleOptionsVisibility.bind(this);
+        this.state = {
+            optionsVisible: false
+        };
+    }
 
-    static propTypes = {};
-
-    componentDidMount() {
-
+    handleOptionsVisibility(visible){
+        this.setState({optionsVisible: visible});
     }
 
     render() {
+        const { optionsVisible } = this.state;
         return (
-            <div>
-
-                <TablaInventario/>
-                <FooterOpciones/>
+            <div className={this.props.classes.inventario}>
+                <TablaInventario
+                    optionsVisibilityHandler={this.handleOptionsVisibility}
+                />
+                <FooterOpciones
+                    visible={optionsVisible}
+                />
             </div>
         );
     }
