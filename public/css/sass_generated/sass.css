@@ -11127,11 +11127,6 @@ ul.ColVis_collection li label span {
   font-size: 14px;
 }
 
-.icon-update {
-  width: 50%;
-  margin-left: 25%;
-}
-
 .plan,
 .icon-update,
 .seleccionado {
@@ -11144,11 +11139,11 @@ ul.ColVis_collection li label span {
 }
 
 .plan:hover {
-  -webkit-transform: scale(1.25);
+  -webkit-transform: scale(1.125);
 }
 
 .icon-update:hover {
-  -webkit-transform: scale(2);
+  -webkit-transform: scale(1.5);
 }
 
 #inventario.display tbody tr.odd > .sorting_1,
@@ -11289,7 +11284,9 @@ table.dataTable.order-column.stripe tbody tr.even.selected > .sorting_3 {
   bottom: 0;
 }
 
-z .popup .popuptext::after {
+/* Popup arrow */
+
+.popup .popuptext::after {
   content: "";
   position: absolute;
   top: 48%;
@@ -11319,5 +11316,12 @@ z .popup .popuptext::after {
   to {
     opacity: 1;
   }
+}
+
+.ReactTable .rt-td {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
 }
 

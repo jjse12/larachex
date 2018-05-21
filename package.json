@@ -10,7 +10,6 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "axios": "^0.18",
         "babel-preset-react": "^6.24.1",
         "bootstrap": "^4.1.0",
         "cross-env": "^5.1",
@@ -36,10 +35,10 @@
         "material-ui": "^1.0.0-beta.44",
         "material-ui-icons": "^1.0.0-beta.36",
         "prop-types": "> 15.0.0",
-        "reac": "0.0.0",
         "react": "^16.3.2",
         "react-bootstrap-table-next": "^0.1.8",
         "react-dom": "^16.3.2",
+        "react-portal-tooltip": "^2.4.0",
         "react-redux": "^5.0.7",
         "react-router": "^4.2.0",
         "react-router-dom": "^4.2.2",

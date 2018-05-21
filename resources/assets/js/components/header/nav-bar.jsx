@@ -62,7 +62,8 @@ export default class NavBar extends Component {
                             <NavBarContentSelector admin={this.props.admin}/>
                         </div>
                         <div className='col-4 text-center'>
-                            <h1 className='text-white'>Chispudito Express</h1>
+                            {/*<h1 className='text-white'>Chispudito Express</h1>*/}
+                            <h1 className='text-white'>React-Table</h1>
                         </div>
                         <div className='col-4 d-flex align-items-center'>
                             <h4 className='col-6 offset-2 text-white align-items-center' >{this.props.user}</h4>

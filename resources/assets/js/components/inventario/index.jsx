@@ -5,7 +5,11 @@ import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
     inventario:{
-        marginTop: '5%'
+        marginTop: '4%',
+        //overflowY: 'none'
+        //top: 0,
+        //bottom:'800px',
+        //height: '33%'
     }
 });
 

@@ -21,6 +21,7 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Menu, { MenuItem, MenuList } from 'material-ui/Menu';
 
 import {push} from "react-router-redux";
+import {getInventario} from "../../reducers/inventario";
 import {getNavbarSelectedFromStore} from "../../reducers/getters";
 import {setNavbarSelected} from "../../reducers/contenido";
 
@@ -134,6 +135,7 @@ export default class NavBarContentSelector extends Component {
                 break;
             case 2:
                 this.props.push('/app/inventario');
+                getInventario();
                 break;
             case 3:
                 this.props.push('/app/historico/paquetes');

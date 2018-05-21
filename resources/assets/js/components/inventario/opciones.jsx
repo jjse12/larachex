@@ -16,24 +16,27 @@ const styles = theme => ({
     footer: {
         position: 'fixed',
         bottom: 0,
-        left: '35%',
-        width: '30%',
     },
     panel_header: {
-        backgroundColor: '#FE6B8B',
+        background: 'linear-gradient(45deg, #FF8E53 30%, #FE6B8B 90%)',
     },
     footer_title: {
-        fontSize: '22px',
-        color: 'black',
+        fontSize: '24px',
+        color: 'white',
         textAlign: "center",
+        marginLeft: '10%',
         width: '100%'
     },
     boton:{
         color: 'white',
         textAlign: 'center',
         align: 'center',
-        marginTop: '5px',
-        marginBottom: '5px',
+        height: '40%',
+        marginTop: '2.5%',
+        marginBottom: '2.5%',
+        width: '90%',
+        marginLeft: '5%',
+        marginRight: '5%',
     },
     notif_icon:{
         marginTop: '5%',
@@ -132,7 +135,7 @@ export default class FooterOpciones extends Component {
         const titulo = this.state.open ? "Esconder Opciones" : "Ver Opciones";
 
         return (
-            <footer className={this.props.classes.footer} >
+            <footer className={`${this.props.classes.footer} col-4 offset-4`} >
                 <ExpansionPanel expanded={this.state.open} onChange={this.panelStateChange}>
                     <ExpansionPanelSummary className={this.props.classes.panel_header} expandIcon={<ExpandLessIcon />}>
                         <label className={this.props.classes.footer_title}>{titulo}</label>

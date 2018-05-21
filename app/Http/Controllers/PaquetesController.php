@@ -26,4 +26,14 @@ class PaquetesController extends Controller
 
         return $paquetes;
     }
+
+
+
+    public function setPlan(Paquete $paquete){
+        $paquete->plan = request('plan');
+
+        if ($paquete->update)
+            return true;
+        return false;
+    }
 }
